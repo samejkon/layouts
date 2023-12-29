@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Livewire\Admin\Category\ListCategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/admin/category', ListCategory::class)->name('category');
