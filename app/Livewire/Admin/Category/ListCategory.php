@@ -38,7 +38,7 @@ class ListCategory extends Component
             ]
         )->validate();
         Categories::create($validatedData);
-        $this->dispatch('hide-form', ['message' => ' Thêm thành công !']);
+        $this->dispatch('hide-form', [' Thêm thành công !']);
     }
     public function edit(Categories $category)
     {
@@ -64,7 +64,7 @@ class ListCategory extends Component
 
         $this->category->update($validatedData);
 
-        $this->dispatch('hide-form', ['message' => " Sửa thành công !"]);
+        $this->dispatch('hide-form', [" Sửa thành công !"]);
     }
 
     public function delete($categoryId)
@@ -72,7 +72,7 @@ class ListCategory extends Component
         $category = Categories::find($categoryId);
 
         $category->delete();
-        $this->dispatch('hide-form', ['message' => " Xoá thành công !"]);
+        $this->dispatch('hide-form', [" Xoá thành công !"]);
         $this->reset();
     }
     public function render()

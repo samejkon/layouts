@@ -7,9 +7,9 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url('assets/css/styles.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}"> --}}
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <title>{{ $title ?? 'My App' }}</title>
     <livewire:styles />
 </head>
@@ -32,7 +32,7 @@
             window.addEventListener('hide-form', event => {
             $('#form').modal('hide');
             console.log(event.detail)
-            toastr.success(event.detail.message, 'Success!')
+            toastr.success(event.detail,'Success!')
         });
         });
     </script>
@@ -49,7 +49,7 @@
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
-    <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
-
+    {{-- <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>
 </body>
 </html>
