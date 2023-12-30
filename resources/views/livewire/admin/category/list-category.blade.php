@@ -3,9 +3,8 @@
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong><i class="fa fa-check-circle me-1"></i> {{ session('message') }} </strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <div class="d-flex align-items-strech">
-    @endif
+    </div>
+@endif
         
         <div class="card w-100">
           <div class="card-body">
@@ -14,7 +13,7 @@
                    <h3>Danh sách danh mục.</h3>
                 </div>
                 <div class="col-6 text-end">
-                   <button wire:click.privent="addCategory" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i> Thêm danh mục</button>
+                   <button wire:click.prevent="addCategory" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i> Thêm danh mục</button>
                 </div>
             </div>
             <div>
@@ -25,17 +24,17 @@
                         <th>Mô tả</th>
                         <th class="text-center">Hành động</th>
                     </thead>
-                      @isset($category)
-                          @if ($category->count()>0)
+                      @isset($categories)
+                          @if ($categories->count()>0)
                             @php $i = 1 @endphp
-                            @foreach ($category as $item)
+                            @foreach ($categories as $category)
                                 <tr>
                                     <td>{{ $i }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->description }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->description }}</td>
                                     <td class="text-center">
-                                        <a href="" class="text-warning me-2"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="" onclick="return confirm('Bạn có chắc chắn xoá danh mục này.')" class="text-danger"><i class="ti ti-trash"></i></a>
+                                        <a  href="" wire:click.prevent="edit({{ $category }})" class="text-warning me-2"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a href="" wire:click.prevent="delete({{ $category->id }})" onclick="return confirm('Bạn có chắc chắn xoá danh mục này.')" class="text-danger"><i class="ti ti-trash"></i></a>
                                     </td>
                                 </tr>
                                 @php $i++ @endphp
@@ -48,7 +47,7 @@
                       @endisset
                 </table>
                 <div class="d-flex justify-content-center fs-1">
-                    {{ $category->links() }}
+                    {{ $categories->links() }}
                 </div>
             </div>
           </div>
@@ -61,10 +60,16 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Category</h1>
+                @if ($showEditModal)
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Sửa Danh Mục</h1>
+                @else
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Danh Mục</h1>
+                @endif
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form autocomplete="off" wire:submit.prevent="createCategory">
+                <form autocomplete="off" wire:submit.prevent="{{ $showEditModal ? 'updateCategory' : 'createCategory'}}">
+                    
                     <div class="modal-body">
                         <div class="form-floating mb-1">
                             <input type="text" wire:model.defer="state.name" name="name" class="form-control @error('name') is-invalid @enderror" id="floatingInput" placeholder="Nhập tên danh mục" value="{{ old('name') }}">
@@ -87,8 +92,12 @@
                           </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-xmark me-1"></i>Cancel</button>
+                        @if ($showEditModal )
+                            <button type="submit" class="btn btn-primary"> <i class="fa fa-save me-1"></i> Save changes</button>
+                        @else
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save me-1"></i> Save</button>
+                        @endif
                     </div>
                 </form>
     
@@ -97,11 +106,3 @@
         </div>
     </div>
 </div>
-<script>
-    window.addEventListener('show-form', event => {
-    $('#form').modal('show');
-    });
-    window.addEventListener('hide-form', event => {
-    $('#form').modal('hide');
-    });
-</script>
